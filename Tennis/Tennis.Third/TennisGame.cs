@@ -1,13 +1,15 @@
-namespace Tennis
+using Tennis.Contract;
+
+namespace Tennis.Third
 {
-    public class TennisGame3 : ITennisGame
+    public class TennisGame : ITennisGame
     {
         private int p2;
         private int p1;
         private string p1N;
         private string p2N;
 
-        public TennisGame3(string player1Name, string player2Name)
+        public TennisGame(string player1Name, string player2Name)
         {
             this.p1N = player1Name;
             this.p2N = player2Name;

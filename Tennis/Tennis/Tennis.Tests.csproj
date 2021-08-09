@@ -11,4 +11,10 @@
     <PackageReference Include="xunit" Version="2.4.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FirstTennisImplementation\Tennis.First.csproj" />
+    <ProjectReference Include="..\Tennis.Second\Tennis.Second.csproj" />
+    <ProjectReference Include="..\Tennis.Third\Tennis.Third.csproj" />
+  </ItemGroup>
+
 </Project>

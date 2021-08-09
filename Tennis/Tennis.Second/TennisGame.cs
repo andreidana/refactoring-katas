@@ -1,6 +1,8 @@
-namespace Tennis
+using Tennis.Contract;
+
+namespace Tennis.Second
 {
-    public class TennisGame2 : ITennisGame
+    public class TennisGame : ITennisGame
     {
         private int p1point;
         private int p2point;
@@ -10,7 +12,7 @@ namespace Tennis
         private string player1Name;
         private string player2Name;
 
-        public TennisGame2(string player1Name, string player2Name)
+        public TennisGame(string player1Name, string player2Name)
         {
             this.player1Name = player1Name;
             p1point = 0;
