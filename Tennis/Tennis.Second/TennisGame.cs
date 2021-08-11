@@ -4,105 +4,95 @@ namespace Tennis.Second
 {
     public class TennisGame : ITennisGame
     {
-        private int p1point;
-        private int p2point;
-
-        private string p1res = "";
-        private string p2res = "";
-        private string player1Name;
-        private string player2Name;
+        private Player playerOne;
+        private Player playerTwo;
 
         public TennisGame(string player1Name, string player2Name)
         {
-            this.player1Name = player1Name;
-            p1point = 0;
-            this.player2Name = player2Name;
-        }
+            playerOne = new Player(player1Name);
+            playerTwo = new Player(player2Name);
+            }
 
         public string GetScore()
         {
             var score = "";
-            if (p1point == p2point && p1point < 3)
+            if (playerOne.Point == playerTwo.Point && playerOne.Point < 3)
             {
-                if (p1point == 0)
+                if (playerOne.Point == 0)
                     score = "Love";
-                if (p1point == 1)
+                if (playerOne.Point == 1)
                     score = "Fifteen";
-                if (p1point == 2)
+                if (playerOne.Point == 2)
                     score = "Thirty";
                 score += "-All";
             }
-            if (p1point == p2point && p1point > 2)
+            if (playerOne.Point == playerTwo.Point && playerOne.Point > 2)
                 score = "Deuce";
 
-            if (p1point > 0 && p2point == 0)
-            {
-                if (p1point == 1)
-                    p1res = "Fifteen";
-                if (p1point == 2)
-                    p1res = "Thirty";
-                if (p1point == 3)
-                    p1res = "Forty";
+            score = GetScoreWhenLeadingToZero(playerOne, playerTwo, score);
+            score = GetScoreWhenLeadingToZero(playerTwo, playerOne, score);
 
-                p2res = "Love";
-                score = p1res + "-" + p2res;
-            }
-            if (p2point > 0 && p1point == 0)
+            if (playerOne.Point > playerTwo.Point && playerOne.Point < 4)
             {
-                if (p2point == 1)
-                    p2res = "Fifteen";
-                if (p2point == 2)
-                    p2res = "Thirty";
-                if (p2point == 3)
-                    p2res = "Forty";
-
-                p1res = "Love";
-                score = p1res + "-" + p2res;
+                if (playerOne.Point == 2)
+                    playerOne.Result = "Thirty";
+                if (playerOne.Point == 3)
+                    playerOne.Result = "Forty";
+                if (playerTwo.Point == 1)
+                    playerTwo.Result = "Fifteen";
+                if (playerTwo.Point == 2)
+                    playerTwo.Result = "Thirty";
+                score = playerOne.Result + "-" + playerTwo.Result;
             }
-
-            if (p1point > p2point && p1point < 4)
+            if (playerTwo.Point > playerOne.Point && playerTwo.Point < 4)
             {
-                if (p1point == 2)
-                    p1res = "Thirty";
-                if (p1point == 3)
-                    p1res = "Forty";
-                if (p2point == 1)
-                    p2res = "Fifteen";
-                if (p2point == 2)
-                    p2res = "Thirty";
-                score = p1res + "-" + p2res;
-            }
-            if (p2point > p1point && p2point < 4)
-            {
-                if (p2point == 2)
-                    p2res = "Thirty";
-                if (p2point == 3)
-                    p2res = "Forty";
-                if (p1point == 1)
-                    p1res = "Fifteen";
-                if (p1point == 2)
-                    p1res = "Thirty";
-                score = p1res + "-" + p2res;
+                if (playerTwo.Point == 2)
+                    playerTwo.Result = "Thirty";
+                if (playerTwo.Point == 3)
+                    playerTwo.Result = "Forty";
+                if (playerOne.Point == 1)
+                    playerOne.Result = "Fifteen";
+                if (playerOne.Point == 2)
+                    playerOne.Result = "Thirty";
+                score = playerOne.Result + "-" + playerTwo.Result;
             }
 
-            if (p1point > p2point && p2point >= 3)
+            if (playerOne.Point > playerTwo.Point && playerTwo.Point >= 3)
             {
                 score = "Advantage player1";
             }
 
-            if (p2point > p1point && p1point >= 3)
+            if (playerTwo.Point > playerOne.Point && playerOne.Point >= 3)
             {
                 score = "Advantage player2";
             }
 
-            if (p1point >= 4 && p2point >= 0 && (p1point - p2point) >= 2)
+            if (playerOne.Point >= 4 && playerTwo.Point >= 0 && (playerOne.Point - playerTwo.Point) >= 2)
             {
                 score = "Win for player1";
             }
-            if (p2point >= 4 && p1point >= 0 && (p2point - p1point) >= 2)
+            if (playerTwo.Point >= 4 && playerOne.Point >= 0 && (playerTwo.Point - playerOne.Point) >= 2)
             {
                 score = "Win for player2";
             }
+            return score;
+        }
+
+        private string GetScoreWhenLeadingToZero(Player player1, Player player2, string score)
+        {
+            if (player2.Point > 0 && player1.Point == 0)
+            {
+                if (player2.Point == 1)
+                    player2.Result = "Fifteen";
+                if (player2.Point == 2)
+                    player2.Result = "Thirty";
+                if (player2.Point == 3)
+                    player2.Result = "Forty";
+
+                player1.Result = "Love";
+                score = player1.Result + "-" + player2.Result;
+            }
+
             return score;
         }
 
@@ -124,12 +114,12 @@ namespace Tennis.Second
 
         private void P1Score()
         {
-            p1point++;
+            playerOne.Point++;
         }
 
         private void P2Score()
         {
-            p2point++;
+            playerTwo.Point++;
         }
 
         public void WonPoint(string player)
