@@ -18,12 +18,7 @@ namespace Tennis.Second
             var score = "";
             if (playerOne.Point == playerTwo.Point && playerOne.Point < 3)
             {
-                if (playerOne.Point == 0)
-                    score = "Love";
-                if (playerOne.Point == 1)
-                    score = "Fifteen";
-                if (playerOne.Point == 2)
-                    score = "Thirty";
+                score = playerOne.CalculateScoreExceptForty(score);
                 score += "-All";
             }
             if (playerOne.Point == playerTwo.Point && playerOne.Point > 2)
@@ -34,26 +29,16 @@ namespace Tennis.Second
 
             if (playerOne.Point > playerTwo.Point && playerOne.Point < 4)
             {
-                if (playerOne.Point == 2)
-                    playerOne.Result = "Thirty";
-                if (playerOne.Point == 3)
-                    playerOne.Result = "Forty";
-                if (playerTwo.Point == 1)
-                    playerTwo.Result = "Fifteen";
-                if (playerTwo.Point == 2)
-                    playerTwo.Result = "Thirty";
+                playerOne.TransformPointsToResult();
+                playerTwo.TransformPointsToResult();
+
                 score = playerOne.Result + "-" + playerTwo.Result;
             }
             if (playerTwo.Point > playerOne.Point && playerTwo.Point < 4)
             {
-                if (playerTwo.Point == 2)
-                    playerTwo.Result = "Thirty";
-                if (playerTwo.Point == 3)
-                    playerTwo.Result = "Forty";
-                if (playerOne.Point == 1)
-                    playerOne.Result = "Fifteen";
-                if (playerOne.Point == 2)
-                    playerOne.Result = "Thirty";
+                playerTwo.TransformPointsToResult();
+                playerOne.TransformPointsToResult();
+
                 score = playerOne.Result + "-" + playerTwo.Result;
             }
 
@@ -82,13 +67,7 @@ namespace Tennis.Second
         {
             if (player2.Point > 0 && player1.Point == 0)
             {
-                if (player2.Point == 1)
-                    player2.Result = "Fifteen";
-                if (player2.Point == 2)
-                    player2.Result = "Thirty";
-                if (player2.Point == 3)
-                    player2.Result = "Forty";
-
+                player2.TransformPointsToResult();
                 player1.Result = "Love";
                 score = player1.Result + "-" + player2.Result;
             }
